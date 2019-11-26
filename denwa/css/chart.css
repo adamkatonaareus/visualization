@@ -1,0 +1,138 @@
+/*
+
+    Denwa no mori theme colors
+    green: #889977
+    blue: #9296A6
+    brown: #523E37
+    dark green: #404D34
+    redish: #E5B6A8
+
+*/
+
+body
+{
+}
+
+svg 
+{
+  padding: 10px;
+  overflow: hidden;
+  font-family: Candara, Calibri, Arial, sans-serif;
+  font-size: 10px;
+}
+
+.background
+{
+    fill: #f9f9f9;
+    stroke: #889977;
+    stroke-width: 3px;
+    opacity: 1;
+}
+
+.radialTick
+{
+  fill: none;
+  stroke: #523E37;
+  opacity: 0.1;
+}
+
+.radialAxisText
+{
+  fill: #a0a0a0;
+  stroke: none;
+  vertical-align: middle;
+  font-size: 8px;
+  font-family: Calibri, Arial, sans-serif;
+}
+
+.dateAxisText
+{
+  fill: #a0a0a0;
+  stroke: none;
+  text-anchor: middle;
+  font-family: Calibri, Arial, sans-serif;
+}
+
+.highTemperature
+{
+  fill: none; /*url('#maxTempGradient');*/
+  stroke: #E5B6A8;
+  opacity: 0.9;
+  stroke-width: 2px;
+}
+.lowTemperature
+{
+  fill: none; /*url('#minTempGradient');*/
+  stroke: #8F98BD;
+  opacity: 1;
+  stroke-width: 2px;
+}
+
+.precip
+{
+  fill: none;
+  stroke:  #664D45;
+  opacity: 0.5;
+  stroke-width: 2px;
+}
+
+.media
+{
+  fill: none; /*url('#mediaGradient'); */
+  stroke: #889977;
+  opacity: 0.9;
+  stroke-width: 2px;
+}
+
+.length
+{
+  fill: none;
+  stroke: #523E37;
+  stroke-width: 5px;
+}
+
+.playLength
+{
+  fill: none;
+  stroke: #523E37;
+  stroke-width: 5px;
+}
+
+.tooltip
+{
+  background: #f9f9f9;
+  color: #889977;
+  border: solid 1px #889977;
+  opacity: 0.95;
+  position: absolute;
+  padding: 10px;
+  border-radius: 2px;
+  display: none;
+
+  max-width: 200;
+}
+
+.title
+{
+  font-size: 18pt;
+  text-anchor: start;
+  dominant-baseline: central;
+
+  fill: #523E37;
+  stroke: none;
+}
+
+.legend
+{
+  font-size: 12pt;
+  text-anchor: start;
+  dominant-baseline: central;
+
+  fill: #523E37;
+  stroke: none;
+}
+
+.bubble
+{
+
+}

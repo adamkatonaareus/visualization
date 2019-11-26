@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bojack Horseman</title>
+    <script src="lib/d3.v5.min.js"></script>
+    <style>
+
+      @font-face 
+      {
+          font-family: 'nessmedium';
+          src: url('fonts/ness-webfont.eot');
+          src: url('fonts/ness-webfont.eot?#iefix') format('embedded-opentype'),
+               url('fonts/ness-webfont.woff2') format('woff2'),
+               url('fonts/ness-webfont.woff') format('woff'),
+               url('fonts/ness-webfont.svg#nessmedium') format('svg');
+          font-weight: normal;
+          font-style: normal;
+      }
+
+      body
+      {
+        font-family: nessmedium, Calibri, Arial, sans-serif;
+        font-size: 12pt;
+
+        background: black; 
+        padding: 0px;
+        margin: 0px;
+      }
+
+      #main
+      {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      #main img
+      {
+          width: 100%;
+          height: 100%;
+          display: block;
+          margin: auto;
+      }
+
+      #svgDiv
+      {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+      }
+
+      svg 
+      {
+        overflow: hidden;
+      }
+
+      .node
+      {
+        fill: #090f2f;
+        stroke: #c1c276;
+        stroke-width: 1px;
+        opacity: 0.8;
+      }
+
+      .link
+      {
+        stroke: #a0a0a0;
+        opacity: 0.8;
+      }
+
+      .label 
+      {
+        text-transform: uppercase;
+        dominant-baseline: middle;
+        text-anchor: middle;
+        fill: white;
+        opacity: 0.8;
+        filter: url(#textFilter);      
+      }      
+
+      .tooltip
+      {
+        background: #090f2f;
+        color: #c1c276;
+        border: solid 1px #c1c276;
+        opacity: 0.95;
+        position: absolute;
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+        width: 20%;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div id="main">
+      <img id="bgImage" src="images/background.jpg" />
+      <div id="svgDiv">
+      <svg>
+        <defs>
+          <filter id="textFilter" x="0" y="0" width="200%" height="200%">
+            <feOffset result="offOut" in="SourceAlpha" dx="3" dy="3" />
+            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="0" />
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+          </filter>
+        </defs>        
+        <g id="links" />
+        <g id="nodes" />
+        <g id="texts" />
+      </svg>
+      </div>
+    </div>
+
+    <script>
+
+      //--- Hack display div size
+      var chartWidth = window.innerWidth > window.innerHeight ? window.innerHeight * 1.77 : window.innerWidth-30;
+      var chartHeight = window.innerWidth > window.innerHeight ? window.innerHeight-20 : window.innerWidth / 1.77;
+      console.log("window width: " + window.innerWidth + ", height: " + window.innerHeight);
+      console.log("width: " + chartWidth + ", height: " + chartHeight);
+
+      const w = d3.select("#bgImage")
+        .style("width", chartWidth + "px")
+        .style("height", chartHeight + "px")
+        .node().getBoundingClientRect();
+      d3.select("#svgDiv").style("left", w.left + "px");
+
+      var svg = d3.select("svg")
+          .attr("width", chartWidth)
+          .attr("height", chartHeight);
+
+      d3.select(window).on('resize.updatesvg', resizeWindow);
+
+      //--- Create a tooltip
+      var tooltip = d3.select('body')
+        .append('div')
+        .classed('tooltip', true);
+
+      var nodeSize = chartWidth / 100;
+      var fontSize = chartWidth / 60;
+      var distance = 500;
+      var strength = -2500;
+      var advanceSpeed = 1000;
+      var chartCenterX = chartWidth * 0.3;
+      var chartCenterY = chartHeight * 0.8;
+
+      var fullData;
+      var data;
+      var simulation;
+      var nodePos = 1;  //--- Bojack is already on the chart.
+      var linkPos = 0;
+      var move = 0;
+
+
+      //--- Load data
+      d3.json("data/connections.json")
+        .then(init);
+        
+      //--- Init data and diagram
+      function init(fData)
+      {
+          //--- Current data will change with time
+          fullData = fData;
+          data = { nodes: [fullData.nodes[0][0]],
+            links: [] };
+
+          console.log("Data: ");
+          console.log(data);
+
+          simulation = d3.forceSimulation(data.nodes)
+               .force("link", d3.forceLink(data.links).distance(distance).id(d => d.id))
+               .force("charge", d3.forceManyBody().strength(strength))
+               .force("center", d3.forceCenter(chartCenterX, chartCenterY))
+               .on("tick", simulationTick);
+
+          //--- Draw the tree
+          draw();
+
+          //--- Advance
+          d3.timeout(advanceGraph, advanceSpeed);
+      }
+
+      /**
+        Draw the tree
+      */
+      function draw()
+      {
+            //--- Add links first so they go below nodes
+            svg.select("#links")
+                .selectAll("line")
+                .data(data.links)
+                .enter()
+                  .append("line")
+                    .attr("stroke-width", d => Math.sqrt(d.value))
+                    .classed("link", true)
+                    .style("opacity", 0)
+                        .transition()       //--- Animation
+                        .ease(d3.easePolyOut)
+                        .duration(1000)
+                        .style("opacity", 0.8);
+
+            //--- Add nodes
+            svg.select("#nodes")
+                .selectAll("circle")
+                .data(data.nodes)
+                .enter()
+                  .append("circle")
+                    .attr("r", nodeSize)
+                    .classed("node", true)
+                    .on("mouseover", showTooltip) //--- Mouse events
+                    .on("mouseout", hideTooltip)
+                    .on("mousemove", updateTooltip)
+                    .style("opacity", 0)
+                        .transition()       //--- Animation
+                        .ease(d3.easePolyOut)
+                        .duration(1000)
+                        .style("opacity", 1);
+
+            //--- Add text
+            svg.select("#texts")
+                .selectAll("text")
+                .data(data.nodes)
+                .enter()
+                  .append("text")
+                    .attr("id", d => "text" + d.id)
+                    .text(d => d.id)
+                    .classed("label", true)
+                    .attr("font-size", fontSize + "px")
+                    .on("mouseover", showTooltip) //--- Mouse events
+                    .on("mouseout", hideTooltip)
+                    .on("mousemove", updateTooltip)
+                    .style("opacity", 0)
+                        .transition()       //--- Animation
+                        .ease(d3.easePolyOut)
+                        .duration(1000)
+                        .style("opacity", 0.8);
+      }
+
+      function advanceGraph()
+      {
+          var added = false;
+
+          //--- Check if we have more data
+          if (nodePos < fullData.nodes.length)
+          {
+              console.log("Step: " + nodePos);
+
+              fullData.nodes[nodePos].forEach(function (n)
+              {
+                data.nodes.push(n);
+                console.log("Added " + n.id);
+
+                //--- Create a random entry coordinate
+                const random = d3.randomUniform(-50, 50);
+                n.x = chartCenterX + random();
+                n.y = chartCenterY + random();
+              });
+
+              added = true;
+              nodePos++;
+          }
+            
+          if (linkPos < fullData.links.length)
+          {
+              fullData.links[linkPos].forEach(function (l)
+              {
+                data.links.push(l);
+                console.log("Added " + l.source + "->" + l.target);
+              });
+
+              added = true;
+              linkPos++;
+          }    
+
+          if (added)
+          {
+                //--- Decrease diagram size
+                nodeSize /= 1.05;
+                strength += 100;
+                fontSize /= 1.05;
+
+                //--- Move center  
+                move += 1;
+
+                //--- Reset simulation
+                simulation
+                  .nodes(data.nodes)
+                  .force("link", d3.forceLink(data.links).id(d => d.id))
+                  .force("charge", d3.forceManyBody().strength(strength))
+                  .force("center", d3.forceCenter(chartCenterX + move, chartCenterY))
+                  .alpha(0.2).restart();
+
+                //--- Redraw
+                draw();
+
+                //--- Advance
+                d3.timeout(advanceGraph, advanceSpeed);
+          }
+      }
+
+      function simulationTick()
+      {
+            svg.select("#links").selectAll("line")
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            //--- Hack nodes to fit screen
+            svg.select("#nodes").selectAll("circle")
+                .attr("cx", d => d.x = d.x > chartWidth * 0.6 ? chartWidth * 0.6 : 
+                  d.x < 40 ? 40 : d.x)
+                .attr("cy", d => d.y = d.y > chartHeight - nodeSize ? chartHeight - nodeSize : 
+                  d.y < chartHeight * 0.55 ? chartHeight * 0.55 : d.y)
+                .attr("r", nodeSize); 
+
+            svg.select("#texts").selectAll("text")
+                .attr("x", d => d.x)
+                .attr("y", d => d.y - nodeSize - 10)
+                .attr("font-size", fontSize + "px");                          
+      }       
+
+      function resizeWindow()
+      {
+        d3.select("#svgDiv").style("left", 
+          d3.select("#bgImage").node().getBoundingClientRect().left + "px");
+
+      }
+
+      //--- Show tooltip
+      function showTooltip(d)
+      {
+        tooltip
+          .style('display', 'inline')
+          .style('opacity', 0)
+          .text(d.description)
+            .transition()
+            .duration(200)
+            .style('opacity', 0.95);
+
+        updateTooltip();
+      }
+
+      //--- Move tooltip when mouse moves
+      function updateTooltip()
+      {
+        tooltip
+          .style('left', (event.pageX + 10) + "px")
+          .style('top', (event.pageY - 50) + "px");
+      }
+
+      //--- Hide tooltip
+      function hideTooltip()
+      {
+        tooltip.style('display', 'none');
+      }
+
+
+    </script>
+  </body>
+</html>

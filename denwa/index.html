@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:url" content="https://art-neko.hu/vis/denwa" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Hív az erdő" />
+    <meta property="og:description" content="" />
+    <meta property="description" content="" />
+    <meta property="og:image" content="images/preview.png" />
+    <meta name="msapplication-TileColor" content="#603cba" />
+    <meta name="theme-color" content="#ffffff" />
+  
+    <title>Hív az erdő</title>
+  
+    <link rel="stylesheet" href="css/fullpage.css" />
+    <link rel="stylesheet" href="css/lightgallery.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/chart.css" />
+    <link rel="stylesheet" href="css/scrolldown.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favico.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favico.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favico.png" />
+    <link rel="manifest" href="mainfest.webmainfest" />
+    <link rel="mask-icon" href="images/favico.png" color="#000000" />
+
+    <script type="text/javascript" charset="UTF-8" src="lib/fullpage.min.js"></script>
+    <script src="lib/d3.v5.min.js"></script>
+    <script src="lib/lightgallery.min.js"></script>
+    <script src="lib/lg-thumbnail.min.js"></script>
+
+    <script src="lib/DenwaWeatherChart.js"></script>
+    <script src="lib/DenwaTopChart.js"></script>
+
+  </head>
+  <body>
+
+    <div id="header">
+
+    </div>
+
+    <div id="fullpage">
+
+      <!-- Section 1 -->
+      <section class="section fullSection">
+        <div class="video-block">
+          <div class="video-block__overlay"></div>
+          <video playsinline="" data-autoplay muted="muted" loop="loop" class="video-block__el" poster="images/hivazerdo_poster.jpg">
+            <source desktop="" src="media/hivazerdo.mp4">
+          </video>
+        </div>   
+        <div class="page-header__headline">
+          <img src="images/logo_white.svg" />  
+          <div class="mouse_scroll">
+            <div class="mouse">
+              <div class="wheel"></div>
+            </div>
+            <div>
+              <span class="m_scroll_arrows unu"></span>
+              <span class="m_scroll_arrows doi"></span>
+              <span class="m_scroll_arrows trei"></span>
+            </div>
+          </div> 
+        </div>  
+
+      </section>
+      
+      <section class="section">
+        <h1 class="white">Képek</h1>
+        <div id="lightgallery1" class="workPhotos">
+          <a href="images/work/01.jpg"><img src="images/work/01.jpg" /></a>
+          <a href="images/work/02.jpg"><img src="images/work/02.jpg" /></a>
+          <a href="images/work/03.jpg"><img src="images/work/03.jpg" /></a>
+          <a href="images/work/04.jpg"><img src="images/work/04.jpg" /></a>
+          <a href="images/work/05.jpg"><img src="images/work/05.jpg" /></a>
+          <a href="images/work/06.jpg"><img src="images/work/06.jpg" /></a>
+          <a href="images/work/07.jpg"><img src="images/work/07.jpg" /></a>
+          <a href="images/work/08.jpg"><img src="images/work/08.jpg" /></a>
+          <a href="images/work/09.jpg"><img src="images/work/09.jpg" /></a>
+          <a href="images/work/12.jpg"><img src="images/work/12.jpg" /></a>
+          <a href="images/work/13.jpg"><img src="images/work/13.jpg" /></a>
+          <a href="images/work/14.jpg"><img src="images/work/14.jpg" /></a>
+          <a href="images/work/15.jpg"><img src="images/work/15.jpg" /></a>
+          <a href="images/work/17.jpg"><img src="images/work/17.jpg" /></a>
+          <a href="images/work/18.jpg"><img src="images/work/18.jpg" /></a>
+          <a href="images/work/19.jpg"><img src="images/work/19.jpg" /></a>
+          <a href="images/work/20.jpg"><img src="images/work/20.jpg" /></a>
+          <a href="images/work/10.jpg"><img src="images/work/10.jpg" /></a>
+          <a href="images/work/11.jpg"><img src="images/work/11.jpg" /></a>
+          <a href="images/work/99.jpg"><img src="images/work/99.jpg" /></a>
+        </div>
+      </section>
+
+      <section class="section fullSection">
+          <img src="images/Verstabla_v2.png" class="poster" />
+      </section>
+      
+      <section class="section">
+        <h1>A diagram fejlődése</h1>
+        <div id="lightgallery2" class="workPhotos">
+          <a href="images/chart/step1.png"><img src="images/chart/step1.png" /></a>
+          <a href="images/chart/step2.png"><img src="images/chart/step2.png" /></a>
+          <a href="images/chart/step3.png"><img src="images/chart/step3.png" /></a>
+          <a href="images/chart/step4.png"><img src="images/chart/step4.png" /></a>
+          <a href="images/chart/step5.png"><img src="images/chart/step5.png" /></a> 
+        </div>             
+      </section>
+      
+      <section class="section fullSection">
+        <svg id="weatherChart"></svg>
+        <script>
+          const c1 = new DenwaWeatherChart("weatherChart");
+        </script>
+      </section>
+
+      <section class="section fullSection">
+        <svg id="topChart"></svg>
+        <script>
+          const c2 = new DenwaTopChart("topChart");
+        </script>        
+      </section>
+
+      <section class="section">
+        <h1>Köszönet</h1>
+      </section>
+
+    </div>
+
+    <script type="text/javascript">
+
+      new fullpage('#fullpage', 
+      {
+        autoScrolling: true,      //--- scrolls whole pages
+        scrollHorizontally: true,
+        sectionsColor: ['#E0E6FF', '#523E37', 'whitesmoke', '#889977', 'white', 'white' ],
+        fixedElements: '#header',
+        bigSectionsDestination: "top"
+      });
+
+
+      lightGallery(document.getElementById('lightgallery1'),
+        {
+              thumbnail:true,
+              animateThumb: false,
+              showThumbByDefault: false
+        }); 
+
+      lightGallery(document.getElementById('lightgallery2'),
+        {
+              thumbnail:true,
+              animateThumb: false,
+              showThumbByDefault: false
+        });       
+
+    </script>
+
+  </body>
+</html>

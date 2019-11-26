@@ -1,0 +1,104 @@
+
+/*
+
+    Denwa no mori theme colors
+    green: #889977
+    blue: #E0E6FF
+    brown: #523E37
+    #404D34
+    #E5B6A8
+
+*/
+
+body
+{
+    font-family: Candara, Helvetica, Arial, sans-serif;
+    font-size: 12pt;
+}
+
+h1
+{
+    font-weight: normal;
+}
+
+h1.white
+{
+    color: white;
+}
+
+.section
+{
+    padding: 1cm 2cm 1cm 2cm;
+    vertical-align: top;
+}
+
+.fullSection
+{
+    padding: 0px;
+}
+
+/* Section 1 video */
+.video-block 
+{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.video-block__overlay
+{
+}
+
+.video-block__el 
+{
+    -o-object-fit: cover;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+/* Section 1 centered text */
+.page-header__headline 
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    max-width: 350px;
+    width: 100%;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    color: white;
+}
+
+.workPhotos img
+{
+    display: block;
+    max-height: 120px;
+    float: left;
+    padding: 2px;
+}
+
+/* Slider images */
+.slide img
+{
+    height: 90%;
+    display: block;
+    margin: auto;
+    padding: 1cm;
+}
+
+.poster 
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    height: 90%;
+    margin: 10px;
+}

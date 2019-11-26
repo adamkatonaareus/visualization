@@ -1,0 +1,51 @@
+[
+	{ "id": 1, "date": "2019-10-03 00:00:00", 
+		"type": "w", "media": "061.hu", "link": "https://nullahategy.hu/hiv-az-erdo-retro-piros-telefonon-lehet-verseket-tarcsazni-a-pilisben" },
+	{ "id": 2, "date": "2019-10-03 07:00:00", 
+		"type": "w", "media": "blans.hu", "link": "http://www.blans.hu/cikkek/a-vilag/kult/eletre-kel-orkeny-novellaja-verselo-telefont-adnak-at-a-pilisszentlaszloi-erdo-toveben" },
+	{ "id": 5, "date": "2019-10-03 14:00:00", 
+		"type": "w", "media": "utadon.hu", "link": "http://utadon.hu/eletre-kel-orkeny-novellaja-verselo-telefont-adnak-at-a-pilisszentlaszloi-erdo-toveben" },
+	{ "id": 11, "date": "2019-10-03 21:00:00", 
+		"type": "w", "media": "blikk.hu", "link": "https://www.blikk.hu/aktualis/belfold/lehet-hogy-nem-okos-de-verset-azt-kivaloan-szaval-az-erdei-telefon" },
+
+	{ "id": 3, "date": "2019-10-04 04:00:00", 
+		"type": "w", "media": "infogyor.hu", "link": "https://www.infogyor.hu/hirek/olvas/tarcsazd-fel-az-erdot-versekert-2019-10-04-085800" },
+
+	{ "id": 4, "date": "2019-10-06 00:00:00", 
+		"type": "w", "media": "recorder blog", "link": "https://recorder.blog.hu/2019/10/06/hallo_tessek_zeneszek_verselnek_az_erdei_telefonban" },
+	{ "id": 7, "date": "2019-10-06 07:00:00", 
+		"type": "w", "media": "nyugat.hu", "link": "https://www.nyugat.hu/cikk/verselo_telefon_pilisszentlaszlo" },
+
+	{ "id": 6, "date": "2019-10-07 00:00:00", 
+		"type": "w", "media": "we love budapest", "link": "https://welovebudapest.com/2019/10/07/hiv-az-erdo-eletre-kelt-orkeny-egypercese-a-pilisi-erdoben-egy-verselo-telefont-allitottak-fel" },
+	{ "id": 8, "date": "2019-10-07 05:00:00", 
+		"type": "w", "media": "imami", "link": "http://budapest.imami.hu/helyi-hirek/hiv-az-erdo-tarcsazz-verseket-piros-telefonon-pilisben" },
+	{ "id": 9, "date": "2019-10-07 10:00:00", 
+		"type": "w", "media": "kultura.hu", "link": "https://kultura.hu/eletre-kelt-orkeny-novellaja-verselo-telefon-a-pilisszentlaszloi-erdonel" },
+	{ "id": 10, "date": "2019-10-07 15:00:00", 
+		"type": "w", "media": "index", "link": "https://index.hu/mindekozben/poszt/2019/10/07/hallo_erdei_telefon_zummog_pilisszentlaszlon" },
+	{ "id": 13, "date": "2019-10-07 20:00:00", 
+		"type": "w", "media": "morzsafarm.hu", "link": "https://morzsafarm.hu/hiv-az-erdo-verset-mond-a-telefonfulke" },
+
+	{ "id": 12, "date": "2019-10-08 02:00:00", 
+		"type": "t", "media": "atv", "link": "http://www.atv.hu/videok/video-20191008-regi-telefon-mond-verseket-az-erdoben" },
+	{ "id": 14, "date": "2019-10-08 08:00:00", 
+		"type": "w", "media": "turista magazin", "link": "https://www.turistamagazin.hu/hir/szavalo-telefont-avattak-az-erdo-szelen" },
+	{ "id": 15, "date": "2019-10-08 15:00:00", 
+		"type": "w", "media": "Cafeblog", "link": "https://utitars.cafeblog.hu/2019/10/08/telefonon-hiv-az-erdo-a-pilisben/" },
+
+	{ "id": 16, "date": "2019-10-09 00:00:00", 
+		"type": "w", "media": "Sokszínű vidék", "link": "https://sokszinuvidek.24.hu/viragzo-videkunk/2019/10/09/verselo-telefon-pilisszentlaszloi-erdo" },
+	{ "id": 17, "date": "2019-10-09 07:00:00", 
+		"type": "w", "media": "turizmus.com", "link": "https://turizmus.com/desztinaciok/piros-telefonon-lehet-verset-hallgatni-a-pilisben-1166598" },
+	{ "id": 18, "date": "2019-10-09 14:00:00", 
+		"type": "w", "media": "Hírmagazin", "link": "https://www.hirmagazin.eu/szavalotelefont-avattak-az-erdo-szelen-video" },
+
+	{ "id": 19, "date": "2019-10-14 00:00:00", 
+		"type": "r", "media": "Kossuth rádió", "link": "" },
+	{ "id": 20, "date": "2019-10-14 08:00:00", 
+		"type": "r", "media": "Jazzy rádió", "link": "" },
+
+	{ "id": 21, "date": "2019-10-16 00:00:00", 
+		"type": "t", "media": "Család-barát", "link": "https://mediaklikk.hu/video/csalad-barat-2019-10-16-i-adas/" }
+]

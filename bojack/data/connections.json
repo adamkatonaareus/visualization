@@ -1,0 +1,60 @@
+{ 
+  "nodes": 
+  [
+  	[{ "id": "Bojack Horseman", "group": 1, "description": "BoJack F. Horseman is the titular main character of BoJack Horseman. The show primarily follows BoJack and his life after his successful '90s sitcom, Horsin' Around." }],
+  	[{ "id": "Pinky Penguin", "group": 1, "description": "Pinky is a very timid, anxious, extremely worrisome penguin, who is desperate for a best-seller to earn enough money to take care of his children and keep his company in business. He is not a bad person at all, he does care about the companies he works for. " }],
+  	[{ "id": "Todd Chavez", "group": 1, "description": "Todd Chavez is a human in his twenties who lives rent-free with BoJack in his house and sleeps on the couch at the beginning of BoJack Horseman. " }],
+  	[{ "id": "Princess Carolyn", "group": 1, "description": "Princess Carolyn is an anthropomorphic pink Persian cat and one of the main characters throughout the BoJack Horseman series. She is BoJack Horseman's ex-girlfriend and former agent." }],
+	[{ "id": "Diane Nguyen", "group": 1, "description": "Diane Nguyen is a Vietnamese-American writer, \"misunderstood intellectual,\" and third-wave feminist from Boston, who lived with her well-off and famous husband, Mr. Peanutbutter, until their divorce in Season 5." }],
+
+	[{ "id": "Mr. Peanutbutter", "group": 1, "description": "Mr. Peanutbutter, the star of Mr. Peanutbutter's House, is an anthropomorphic yellow Labrador Retriever, who is BoJack Horseman's friend and former sitcom rival and a main character in BoJack Horseman. He dates and later marries Diane Nguyen, although the two divorce in Season 5. " }],
+	[{ "id": "Beatrice Horseman", "group": 1, "description": "Beatrice Elizabeth Horseman (née Sugarman) was BoJack's neglectful and verbally abusive mother, the widow of Butterscotch Horseman, and the heiress to the Sugarman Sugar Cube Company. She was also the daughter of Joseph and Honey Sugarman, and the younger sister of Crackerjack. " },
+  	 { "id": "Butterscotch Horseman", "group": 1, "description": "Butterscotch Horseman is the deceased verbally and physically abusive father of BoJack Horseman, the biological father of Hollyhock Manheim-Mannheim-Guerrero-Robinson-Zilberschlag-Hsung-Fonzerelli-McQuack, and the husband of Beatrice Horseman. He is a recurring character (through flashbacks) throughout Seasons 1, 4, and 5. " }],
+
+	[{ "id": "Sarah Lynn", "group": 1, "description": "Sarah Lynn was a pop star and child actress who played the Horse's precocious adoptive youngest daughter Sabrina on the fictional 90s TV show Horsin' Around and a recurring character in the BoJack Horseman series. " }],
+	[{ "id": "Andrew Garfield", "group": 1, "description": "Andrew Russel Garfield is an American-British actor best known for playing the part of Spider-Man in The Amazing Spider-Man series. " }],
+	
+	[{ "id": "Herb Kazzaz", "group": 1, "description": "Herb Kazzaz was the creator of Horsin' Around and a recurring character in BoJack Horseman. His first appearance was in Zoës and Zeldas, in Season 1. " }],
+	[{ "id": "Vanessa Gekko", "group": 1, "description": "Vanessa Gekko is a recurring character. She was first mentioned in Prickly-Muffin, before her debut appearance in Say Anything in Season 1. " }],
+	[{ "id": "Margo Martindale", "group": 1, "description": "Character Actress Margo Martindale makes cameo appearances in several episodes of BoJack Horseman, as a minor and recurring character. " }],
+	[{ "id": "Charlotte Carson", "group": 1, "description": "Charlotte Carson (née Moore) is a minor and recurring character in BoJack Horseman. She is especially a prominent character in Season 2, in the episode Escape from L.A.. " }],
+	[{ "id": "Vincent Adultman", "group": 1, "description": "Vincent Adultman is a recurring character throughout Season 1 and Season 2 of BoJack Horseman. " }],
+
+	[{ "id": "A Ryan Seacrest Type", "group": 1, "description": "A Ryan is an enthusiastic talk show host, who is an exaggerated version of the real Ryan Seacrest. Little else is known about him. " }] 
+  ],
+  "links": [
+   	[{ "source": "Bojack Horseman", "target": "Pinky Penguin", "value": 1 }],
+  	[{ "source": "Bojack Horseman", "target": "Todd Chavez", "value": 1 }],
+  	[{ "source": "Bojack Horseman", "target": "Princess Carolyn", "value": 1 },
+  	 { "source": "Pinky Penguin", "target": "Princess Carolyn", "value": 1 }],
+  	[{ "source": "Bojack Horseman", "target": "Diane Nguyen", "value": 1 }],
+
+  	[{ "source": "Bojack Horseman", "target": "Mr. Peanutbutter", "value": 1 }],
+  	[{ "source": "Diane Nguyen", "target": "Mr. Peanutbutter", "value": 1 },
+  	 { "source": "Diane Nguyen", "target": "Todd Chavez", "value": 1 },
+  	 { "source": "Bojack Horseman", "target": "Beatrice Horseman", "value": 1 },
+  	 { "source": "Bojack Horseman", "target": "Butterscotch Horseman", "value": 1 },
+  	 { "source": "Butterscotch Horseman", "target": "Beatrice Horseman", "value": 1 }],
+
+  	[{ "source": "Bojack Horseman", "target": "Sarah Lynn", "value": 1 }],
+  	[{ "source": "Andrew Garfield", "target": "Sarah Lynn", "value": 1 }],
+
+  	[{ "source": "Herb Kazzaz", "target": "Bojack Horseman", "value": 1 },
+  	 { "source": "Herb Kazzaz", "target": "Sarah Lynn", "value": 1 }],
+
+  	[{ "source": "Bojack Horseman", "target": "Vanessa Gekko", "value": 1 },
+  	 { "source": "Princess Carolyn", "target": "Vanessa Gekko", "value": 1 }],
+
+  	[{ "source": "Bojack Horseman", "target": "Margo Martindale", "value": 1 },
+  	 { "source": "Pinky Penguin", "target": "Diane Nguyen", "value": 1 }],
+
+  	[{ "source": "Charlotte Carson", "target": "Herb Kazzaz", "value": 1 },
+  	 { "source": "Charlotte Carson", "target": "Bojack Horseman", "value": 1 }],
+
+  	[{ "source": "Vincent Adultman", "target": "Princess Carolyn", "value": 1 },
+  	 { "source": "Vincent Adultman", "target": "Bojack Horseman", "value": 1 },
+  	 { "source": "Vincent Adultman", "target": "Todd Chavez", "value": 1 }],
+
+  	[{ "source": "Bojack Horseman", "target": "A Ryan Seacrest Type", "value": 1 }]
+  ] 
+}
