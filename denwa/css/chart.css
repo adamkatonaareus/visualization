@@ -41,6 +41,7 @@ svg
   fill: #a0a0a0;
   stroke: none;
   vertical-align: middle;
+  text-anchor: middle;
   font-size: 8px;
   font-family: Calibri, Arial, sans-serif;
 }
@@ -124,8 +125,8 @@ svg
 
 .legend
 {
-  font-size: 12pt;
-  text-anchor: start;
+  font-size: 10pt;
+  text-anchor: end;
   dominant-baseline: central;
 
   fill: #523E37;
@@ -135,4 +136,10 @@ svg
 .bubble
 {
 
+}
+
+.startLine
+{
+  stroke: #523E37;
+  opacity: 0.1;
 }

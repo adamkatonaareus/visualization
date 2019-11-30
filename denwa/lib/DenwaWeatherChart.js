@@ -11,9 +11,9 @@ class DenwaWeatherChart
     minRadius = 30;
     minAngle = 0;
     maxAngle = 359;
-    angleSkew = 180;
+    angleSkew = -90;
     startDate = new Date(2019, 9, 5, 0);
-    endDate = new Date(2019, 10, 5, 0);
+    endDate = new Date(2019, 10, 4, 0);
     hackStartHour = 7;
     hackEndHour = 16;
     monthFormatter = d3.timeFormat("%B");
@@ -23,8 +23,8 @@ class DenwaWeatherChart
 
     precipHeight = [0, 0.09];
     tempHeight = [0.09, 0.35];
-    mediaHeight = [0.4, 0.6];
-    playsHeight = [0.65, 0.95];
+    mediaHeight = [0.4, 0.61];
+    playsHeight = [0.645, 0.95];
     dateHeight = [0.96, 0.97];
     pubHeight = [0.625, 0.655];
 
@@ -43,6 +43,7 @@ class DenwaWeatherChart
     timeScale;
     toolTip;
     iconSize;
+    authorColors;
 
     /**
         Constructor
@@ -103,7 +104,7 @@ class DenwaWeatherChart
         //--- For the hourly play count, we need to filter for plays only - and date
         const playData = mData
           .filter(d => d.entryType == 0)
-          .filter(d => new Date(d.created) >= this.startDate && new Date(d.created) < this.addDays(this.endDate, 1));      
+          .filter(d => new Date(d.created) >= this.startDate && new Date(d.created) < this.addDays(this.endDate, 0));      
         console.log("Play data:");
         console.log(playData);
 
@@ -155,7 +156,9 @@ class DenwaWeatherChart
 
     processPublicityData(pData)
     {
-        this.publicityData = pData;
+        //--- Filter for the given range
+        this.publicityData = pData
+          .filter(d => new Date(d.date) >= this.startDate && new Date(d.date) <= this.addDays(this.endDate, 1));                     
 
         //--- Draw axis and stuff.
         this.drawAxis();
@@ -216,6 +219,11 @@ class DenwaWeatherChart
             .attr("id", "mainCenter")
             .attr("transform", "translate(" + this.chartWidth / 2 + "," + this.chartHeight / 2 + ")");
 
+        //--- Define a color scale for the authors
+        this.authorColors = d3.scaleLinear()
+          .domain([0, this.maxMediaId])
+          .range(["#E5B6A8", "#889977"]);
+
         //--- Add a background.
         this.center
             .append("g")
@@ -251,33 +259,21 @@ class DenwaWeatherChart
                 .attr("x", d => this.angleToX(this.timeScale(d), this.calculateScaleHeight(this.dateHeight[0])))
                 .attr("y", d => this.angleToY(this.timeScale(d), this.calculateScaleHeight(this.dateHeight[0])))
                 .attr("transform", function(d, i) { return "rotate(" 
-                    + (this.timeScale(d) - 90) + ", "
+                    + (this.timeScale(d)) + ", "
                     + this.angleToX(this.timeScale(d), this.calculateScaleHeight(this.dateHeight[0])) + ", "
                     + this.angleToY(this.timeScale(d), this.calculateScaleHeight(this.dateHeight[0]))
                     + ")"; }.bind(this))               
                 ;
 
-        // ga = center.append("g")
-        //     .attr("id", "monthAxis")
-        //     .selectAll("g")
-        //         .data(timeScale.ticks(d3.timeMonth.every(1)))
-        //         .enter().append("g")
-        //             .attr("transform", function(d, i) { return "rotate(" + (timeScale(d) + angleSkew) + ")"; });
-
-        // ga.append("text")
-        //     .attr("x", maxRadius)
-        //     //.attr("dy", ".35em")
-        //     .classed("dateAxisText", true)
-        //     .attr("transform", function(d) { return "rotate(90, " + (calculateScaleHeight(dateHeight[0]) + 10) + ", 10)"; })
-        //     .text(d => monthFormatter(d));    
-
-        //--- Append design
-        this.center.append("image")
-          .attr("href", "images/tree.svg")
-          //.attr("viewBox", "0 0 700 700")
-          .attr("x", this.angleToX(140, this.maxRadius) + 31)
-          .attr("y", this.angleToY(140, this.maxRadius) - 75)
-          .attr("preserveAspectRatio", "xMinYMin meet");
+        //--- Add a line to show the start of the diagram
+        this.center.append("g")
+          .attr("id", "start")
+          .append("line")
+            .attr("x1", 0)
+            .attr("y1", 0)
+            .attr("x2", 0)
+            .attr("y2", this.angleToY(0, this.maxRadius))
+            .attr("class", "startLine");
     }
 
     /**
@@ -325,7 +321,7 @@ class DenwaWeatherChart
             .enter()
               .append("path")
               .attr("class", "length")
-              .attr("style", d => "opacity: " + (d.playLength / d.length))
+              .attr("style", d => "opacity: " + (d.playLength / d.length) + "; stroke: " + this.authorColors(d.mediaId))
               .attr("d", d => this.createPlayCurve(d, d.length))
               .on("mouseover", this.showPlayTooltip.bind(this)) //--- Mouse events
               .on("mouseout", this.hideTooltip.bind(this))
@@ -350,7 +346,7 @@ class DenwaWeatherChart
                 .attr("height", this.iconSize)
                 .attr("preserveAspectRatio", "xMinYMin meet")
                 .attr("transform", function(d, i) { return "rotate(" 
-                    + (this.timeScale(new Date(d.date)) - 90) + ", "
+                    + (this.timeScale(new Date(d.date))) + ", "
                     + this.angleToX(this.timeScale(new Date(d.date)), this.calculateScaleHeight(this.pubHeight[0])) + ", "
                     + this.angleToY(this.timeScale(new Date(d.date)), this.calculateScaleHeight(this.pubHeight[0]))
                     + ")"; }.bind(this))
@@ -436,6 +432,7 @@ class DenwaWeatherChart
         if (showNumbers)
         {
             gr.append("text")
+                .attr("x", 0)
                 .attr("y", function(d) { return -scale(d) - 2; })
                 .attr("transform", "rotate(" + angle + ")")
                 .classed("radialAxisText", true)
@@ -476,7 +473,7 @@ class DenwaWeatherChart
       var titleY = this.chartHeight / 2 - this.maxRadius;
       title.append("text")
           .attr("x", titleX)
-          .attr("y", titleY += titleHeight)
+          .attr("y", titleY)
           .classed("title", true)
           .text("A telefon látogatottsága");
       title.append("text")
@@ -498,102 +495,151 @@ class DenwaWeatherChart
       //--- Append info
       const infoWidth = 25;
       const infoHeight = 20;
-      var infoY = this.chartHeight /2 + this.maxRadius - 10;
+      const infoX = this.chartWidth / 2 + this.maxRadius + 250;
+      var infoY = this.chartHeight /2 - this.maxRadius + 200;
       const legend = this.svg.append("g")
         .attr("id", "legend");
 
       legend.append("line")
-        .attr("x1", titleX)
+        .attr("x1", infoX)
         .attr("y1", infoY)
-        .attr("x2", titleX + infoWidth)
+        .attr("x2", infoX - infoWidth)
         .attr("y2", infoY)
         .classed("precip", true);
       legend.append("text")
-          .attr("x", titleX + infoWidth + 5)
+          .attr("x", infoX - infoWidth - 5)
           .attr("y", infoY)
           .classed("legend", true)
           .text("csapadék [mm]");
-      infoY -= infoHeight;
+      infoY += infoHeight;
 
       legend.append("line")
-        .attr("x1", titleX)
+        .attr("x1", infoX)
         .attr("y1", infoY)
-        .attr("x2", titleX + infoWidth)
+        .attr("x2", infoX - infoWidth)
         .attr("y2", infoY)
         .classed("lowTemperature", true);
       legend.append("text")
-          .attr("x", titleX + infoWidth + 5)
+          .attr("x", infoX - infoWidth - 5)
           .attr("y", infoY)
           .classed("legend", true)
           .text("minimum hőmérséklet [°C]");
-      infoY -= infoHeight;
+      infoY += infoHeight;
 
       legend.append("line")
-        .attr("x1", titleX)
+        .attr("x1", infoX)
         .attr("y1", infoY)
-        .attr("x2", titleX + infoWidth)
+        .attr("x2", infoX - infoWidth)
         .attr("y2", infoY)
         .classed("highTemperature", true);
       legend.append("text")
-          .attr("x", titleX + infoWidth + 5)
+          .attr("x", infoX - infoWidth - 5)
           .attr("y", infoY)
           .classed("legend", true)
           .text("maximum hőmérséklet [°C]");
-      infoY -= infoHeight;
+      infoY += infoHeight;
 
       legend.append("line")
-        .attr("x1", titleX)
+        .attr("x1", infoX)
         .attr("y1", infoY)
-        .attr("x2", titleX + infoWidth)
+        .attr("x2", infoX - infoWidth)
         .attr("y2", infoY)
         .classed("media", true);
       legend.append("text")
-          .attr("x", titleX + infoWidth + 5)
+          .attr("x", infoX - infoWidth - 5)
           .attr("y", infoY)
           .classed("legend", true)
           .text("látogatottság [db/h]");
-      infoY -= infoHeight;
+      infoY += infoHeight;
 
-      const legendIconSize = 9;
+      legend.append("text")
+          .attr("x", infoX)
+          .attr("y", infoY += 10)
+          .classed("legend", true)
+          .text("Média megjelenések:");
+      infoY += infoHeight;
+
+      const legendIconSize = 12;
       legend.append("image")
           .classed("publicity", true)
           .attr("href", "images/web.svg")
           .attr("viewBox", "0 0 20 20")
-          .attr("x", titleX)
-          .attr("y", infoY - 3)
+          .attr("x", infoX - legendIconSize)
+          .attr("y", infoY - legendIconSize / 2)
           .attr("width", legendIconSize)
           .attr("height", legendIconSize)
           .attr("preserveAspectRatio", "xMinYMin meet");
+      legend.append("text")
+          .attr("x", infoX - legendIconSize - 5)
+          .attr("y", infoY)
+          .classed("legend", true)
+          .text("internet");
+
+      infoY += infoHeight;
+
       legend.append("image")
           .classed("publicity", true)
           .attr("href", "images/tv.svg")
           .attr("viewBox", "0 0 20 20")
-          .attr("x", titleX + legendIconSize)
-          .attr("y", infoY - 3)
+          .attr("x", infoX - legendIconSize)
+          .attr("y", infoY - legendIconSize / 2)
           .attr("width", legendIconSize)
           .attr("height", legendIconSize)
           .attr("preserveAspectRatio", "xMinYMin meet");
+      legend.append("text")
+          .attr("x", infoX - legendIconSize - 5)
+          .attr("y", infoY)
+          .classed("legend", true)
+          .text("televízió");
+
+      infoY += infoHeight;
+
       legend.append("image")
           .classed("publicity", true)
           .attr("href", "images/radio.svg")
           .attr("viewBox", "0 0 20 20")
-          .attr("x", titleX + 2 * legendIconSize)
-          .attr("y", infoY - 3)
+          .attr("x", infoX - legendIconSize)
+          .attr("y", infoY - legendIconSize / 2)
           .attr("width", legendIconSize)
           .attr("height", legendIconSize)
           .attr("preserveAspectRatio", "xMinYMin meet")                    
       legend.append("text")
-          .attr("x", titleX + infoWidth + 5)
+          .attr("x", infoX - legendIconSize - 5)
           .attr("y", infoY)
           .classed("legend", true)
-          .text("média megjelenések");
+          .text("rádió");
 
       //--- Append logo
-      this.svg.append("image")
+      const logoWidth = 160;
+      legend.append("image")
         .attr("href", "images/logo.svg")
-        .attr("x", this.chartWidth / 2 + this.maxRadius + 30)
-        .attr("y", this.chartHeight / 2 + this.maxRadius - 150)
+        .attr("x", infoX - logoWidth + 8)
+        .attr("y", this.chartHeight / 2 - this.maxRadius - 10)
+        .attr("viewBox", "0 0 " + logoWidth + " " + logoWidth)
+        .attr("width", logoWidth)
         .attr("preserveAspectRatio", "xMinYMin meet");          
+
+      //--- Append design
+      const leafAngle = 60;
+      const leafWidth = 150;
+      const leafHeight = 100;
+      this.center.append("image")
+        .attr("href", "images/tree.svg")
+        .attr("viewBox", "0 0 " + leafWidth + " " + leafHeight)
+        //.attr("x", -leafWidth/2)
+        //.attr("y", -leafHeight/2)
+        .attr("width", leafWidth)
+        .attr("height", leafHeight)
+        .attr("x", this.angleToX(leafAngle, this.maxRadius) - 15)
+        .attr("y", this.angleToY(leafAngle, this.maxRadius) - leafHeight)
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("transform", function(d) { return "rotate(" 
+            + 180 + ", "
+            + 0 + ", "
+            + 0
+            + ")"; }.bind(this))
+        ;        
+
     }
 
     simplifyDate(s, clearHours, skew)

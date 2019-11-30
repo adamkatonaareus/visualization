@@ -44,6 +44,7 @@ h1.white
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    opacity: 0.6;
 }
 
 .video-block__overlay
@@ -67,18 +68,38 @@ h1.white
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
-    max-width: 350px;
-    width: 100%;
-    padding-left: 25px;
-    padding-right: 25px;
-
+    width: 75%;
     color: white;
+}
+
+.opening-logo
+{
+    float: left;
+    width: 32%;
+    padding-right: 1cm;
+    padding-bottom: 1cm;
+}
+.opening-text
+{
+    float: left;
+    width: 60%;
+    text-align: left;
+}
+
+.opening-text h1
+{
+    margin-top: 10px;
+}
+
+.clearfix
+{
+    clear: both;
 }
 
 .workPhotos img
 {
     display: block;
-    max-height: 140px;
+    max-height: 153px;
     float: left;
     padding: 2px;
 }
