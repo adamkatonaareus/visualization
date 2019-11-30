@@ -87,6 +87,7 @@ class Neko
 	      			.attr("width", this.pawSize)
 	      			.attr("height", this.pawSize)
 	          		.attr("preserveAspectRatio", "xMinYMin meet")
+                    .style("opacity", 0.8)
 	          		.attr("filter", (d, i) => "url(#blur" + d[3] + ")")
 				 	.call(enter => enter.transition()
 							.ease(d3.easeLinear)

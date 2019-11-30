@@ -19,6 +19,7 @@ body
 h1
 {
     font-weight: normal;
+    margin-top: 0px;
 }
 
 h1.white
@@ -28,7 +29,7 @@ h1.white
 
 .section
 {
-    padding: 1cm 2cm 1cm 2cm;
+    padding: 15px 2cm 15px 2cm;
     vertical-align: top;
 }
 
@@ -77,7 +78,7 @@ h1.white
 .workPhotos img
 {
     display: block;
-    max-height: 120px;
+    max-height: 140px;
     float: left;
     padding: 2px;
 }
