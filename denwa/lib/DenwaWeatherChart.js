@@ -465,12 +465,25 @@ class DenwaWeatherChart
     {
       const title = this.svg.append("g")
         .attr("id", "title");
+      const legend = this.svg.append("g")
+        .attr("id", "legend");
 
-      //--- Append title
       const titleHeight = 28;
       const titleWidth = 200;
       const titleX = this.chartWidth / 2 - this.maxRadius - titleWidth;
-      var titleY = this.chartHeight / 2 - this.maxRadius;
+
+      //--- Append logo
+      const logoWidth = 160;
+      legend.append("image")
+        .attr("href", "images/logo.svg")
+        .attr("x", titleX + 15)
+        .attr("y", this.chartHeight / 2 - this.maxRadius - 10)
+        .attr("viewBox", "0 0 " + logoWidth + " " + logoWidth)
+        .attr("width", logoWidth)
+        .attr("preserveAspectRatio", "xMinYMin meet");         
+
+      //--- Append title
+      var titleY = this.chartHeight / 2 - this.maxRadius + logoWidth + 20;
       title.append("text")
           .attr("x", titleX)
           .attr("y", titleY)
@@ -495,10 +508,8 @@ class DenwaWeatherChart
       //--- Append info
       const infoWidth = 25;
       const infoHeight = 20;
-      const infoX = this.chartWidth / 2 + this.maxRadius + 250;
-      var infoY = this.chartHeight /2 - this.maxRadius + 200;
-      const legend = this.svg.append("g")
-        .attr("id", "legend");
+      const infoX = this.chartWidth / 2 + this.maxRadius + 140;
+      var infoY = this.chartHeight /2 - this.maxRadius + 10;
 
       legend.append("line")
         .attr("x1", infoX)
@@ -608,16 +619,6 @@ class DenwaWeatherChart
           .attr("y", infoY)
           .classed("legend", true)
           .text("rádió");
-
-      //--- Append logo
-      const logoWidth = 160;
-      legend.append("image")
-        .attr("href", "images/logo.svg")
-        .attr("x", infoX - logoWidth + 8)
-        .attr("y", this.chartHeight / 2 - this.maxRadius - 10)
-        .attr("viewBox", "0 0 " + logoWidth + " " + logoWidth)
-        .attr("width", logoWidth)
-        .attr("preserveAspectRatio", "xMinYMin meet");          
 
       //--- Append design
       const leafAngle = 60;

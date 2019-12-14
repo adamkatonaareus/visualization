@@ -29,7 +29,7 @@ h1.white
 
 .section
 {
-    padding: 15px 2cm 15px 2cm;
+    padding: 15px 20px 15px 20px;
     vertical-align: top;
 }
 
@@ -72,20 +72,25 @@ h1.white
     color: white;
 }
 
+.opening-background
+{
+    display: table;
+    width: 92%;
+    padding: 15px;
+    background: rgba(10, 10, 10, 0.6);
+}
 .opening-logo
 {
     float: left;
-    width: 32%;
-    padding-right: 1cm;
-    padding-bottom: 1cm;
+    width: 34%;
+    padding-right: 20px;
 }
 .opening-text
 {
     float: left;
-    width: 60%;
+    width: 66%;
     text-align: left;
 }
-
 .opening-text h1
 {
     margin-top: 10px;
@@ -99,7 +104,7 @@ h1.white
 .workPhotos img
 {
     display: block;
-    max-height: 153px;
+    max-height: 165px;
     float: left;
     padding: 2px;
 }
